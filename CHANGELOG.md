@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.0.0+1]
+
+### Changed
+
+- Minor README changes.
+
 ## [1.0.0]
 
 ### Added
@@ -19,5 +25,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   5. **IterableConverter**, which takes the other `converter` as an argument and
      serializes each value in the `Iterable` with that converter.
 
-[unreleased]: https://github.com/Jlgtri/json_converters/compare/v1.0.0...HEAD
-[1.0.0]: https://github.com/Jlgtri/json_converters/releases/tag/v1.0.0
+[unreleased]: https://github.com/Jlgtri/json_converters_lite/compare/v1.0.0+1...HEAD
+[1.0.0+1]: https://github.com/Jlgtri/json_converters_lite/compare/v1.0.0+1...HEAD
+[1.0.0]: https://github.com/Jlgtri/json_converters_lite/releases/tag/v1.0.0
