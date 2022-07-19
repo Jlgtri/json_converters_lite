@@ -1,7 +1,7 @@
 name: json_converters_lite
 description: Easily convert common Dart data types into a json compatible ones.
 repository: https://github.com/Jlgtri/json_converters
-version: 1.0.0
+version: 1.0.0+1
 
 environment:
   sdk: '>=2.12.0 <3.0.0'

@@ -65,3 +65,6 @@ added to this package. Also, any bug reports are appreciated.
 
 Because, these features are frequently used in different projects. Thus, it is
 very useful and convenient to have a consistent code base between projects.
+
+[dependencies]: https://dart.dev/tools/pub/dependencies
+[pubspec]: https://dart.dev/tools/pub/pubspec
