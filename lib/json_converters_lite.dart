@@ -1,6 +1,9 @@
-library json_converters;
+library json_converters_lite;
+
+import 'package:meta/meta.dart';
 
 /// The class to convert an object of type [T] to the object of type [S].
+@immutable
 mixin JsonConverter<T extends Object?, S extends Object?> on Object {
   /// Convert an object of type [T] to the object of type [S].
   S toJson(final T value);
@@ -12,6 +15,8 @@ mixin JsonConverter<T extends Object?, S extends Object?> on Object {
 /// The dummy converter for nullable [T].
 ///
 /// Returns the same instance it was passed.
+@immutable
+@optionalTypeArgs
 class OptionalDummyConverter<T extends Object?>
     implements JsonConverter<T?, T?> {
   /// The dummy converter for nullable [T].
@@ -29,6 +34,8 @@ class OptionalDummyConverter<T extends Object?>
 /// The dummy converter for [T].
 ///
 /// Returns the same instance it was passed.
+@immutable
+@optionalTypeArgs
 class DummyConverter<T extends Object> implements JsonConverter<T, T> {
   /// The dummy converter for [T].
   ///
@@ -45,6 +52,8 @@ class DummyConverter<T extends Object> implements JsonConverter<T, T> {
 /// The converter for nullable [Iterable].
 ///
 /// Converts an [Iterable] using the provided [converter].
+@immutable
+@optionalTypeArgs
 class OptionalIterableConverter<T extends Object, S extends Object>
     implements JsonConverter<Iterable<T>?, Iterable<S>?> {
   /// The converter for nullable [Iterable].
@@ -70,6 +79,8 @@ class OptionalIterableConverter<T extends Object, S extends Object>
 /// The converter for [Iterable].
 ///
 /// Converts an [Iterable] using the provided [converter].
+@immutable
+@optionalTypeArgs
 class IterableConverter<T extends Object, S extends Object>
     implements JsonConverter<Iterable<T>, Iterable<S>> {
   /// The converter for [Iterable].
@@ -96,6 +107,7 @@ const OptionalBoolConverter optionalBoolConverter = OptionalBoolConverter._();
 /// The converter for nullable [bool].
 ///
 /// Converts nullable [bool] to nullable [int].
+@immutable
 class OptionalBoolConverter implements JsonConverter<bool?, int?> {
   const OptionalBoolConverter._();
 
@@ -114,6 +126,7 @@ const BoolConverter boolConverter = BoolConverter._();
 /// The converter for [bool].
 ///
 /// Converts [bool] to [int].
+@immutable
 class BoolConverter implements JsonConverter<bool, int> {
   /// The converter for [bool].
   ///
@@ -136,6 +149,7 @@ const OptionalDateTimeConverter optionalDateTimeConverter =
 /// The converter for nullable [DateTime].
 ///
 /// Converts [DateTime] to `ISO8601` string.
+@immutable
 class OptionalDateTimeConverter implements JsonConverter<DateTime?, String?> {
   /// The converter for nullable [DateTime].
   ///
@@ -169,6 +183,7 @@ const DateTimeConverter dateTimeConverter = DateTimeConverter();
 /// The converter for [DateTime].
 ///
 /// Converts [DateTime] to `ISO8601` string.
+@immutable
 class DateTimeConverter implements JsonConverter<DateTime, String> {
   /// The converter for [DateTime].
   ///
@@ -210,6 +225,7 @@ const OptionalDurationConverter optionalDurationConverter =
 /// The converter for nullable [Duration].
 ///
 /// Gets total seconds within the [Duration] with microsecond precision.
+@immutable
 class OptionalDurationConverter implements JsonConverter<Duration?, num?> {
   /// The converter for nullable [Duration].
   ///
@@ -249,6 +265,7 @@ const DurationConverter durationConverter = DurationConverter._();
 /// The converter for [Duration].
 ///
 /// Gets total seconds within the [Duration] with microsecond precision.
+@immutable
 class DurationConverter implements JsonConverter<Duration, num> {
   /// The converter for [Duration].
   ///
@@ -297,6 +314,7 @@ class DurationConverter implements JsonConverter<Duration, num> {
 /// The converter for nullable [Enum].
 ///
 /// Converts [Enum] to [String].
+@immutable
 class OptionalEnumConverter<T extends Enum>
     implements JsonConverter<T?, String?> {
   /// The converter for nullable [Enum].
@@ -327,6 +345,7 @@ class OptionalEnumConverter<T extends Enum>
 /// The converter for [Enum].
 ///
 /// Converts [Enum] to [String].
+@immutable
 class EnumConverter<T extends Enum> implements JsonConverter<T, String> {
   /// The converter for [Enum].
   ///
