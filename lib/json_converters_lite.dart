@@ -357,7 +357,7 @@ class EnumConverter<T extends Enum> implements JsonConverter<T, String> {
 
   @override
   T fromJson(final String value) => values.firstWhere(
-        (final T value) => value.name == value,
+        (final T $value) => $value.name == value,
         orElse: () => throw FormatException(
             'Value "$value" is not present. Possible values: '
             '${values.map((final T value) => value.name).join(', ')}'),
