@@ -315,6 +315,7 @@ class DurationConverter implements JsonConverter<Duration, num> {
 ///
 /// Converts [Enum] to [String].
 @immutable
+@optionalTypeArgs
 class OptionalEnumConverter<T extends Enum>
     implements JsonConverter<T?, String?> {
   /// The converter for nullable [Enum].
@@ -346,6 +347,7 @@ class OptionalEnumConverter<T extends Enum>
 ///
 /// Converts [Enum] to [String].
 @immutable
+@optionalTypeArgs
 class EnumConverter<T extends Enum> implements JsonConverter<T, String> {
   /// The converter for [Enum].
   ///
