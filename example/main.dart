@@ -17,13 +17,14 @@ void main() {
   print(dateTime == $deserializedDateTime); // true
 
   const Duration duration = Duration.zero;
-  final num serializedDuration = durationConverter.toJson(duration); // 0.0
+  final String serializedDuration =
+      durationConverter.toJson(duration); // 00:00:00.000000
   final Duration deserializedDuration =
       durationConverter.fromJson(serializedDuration);
   print(duration == deserializedDuration); // true
 
-  final num? $serializedDuration =
-      optionalDurationConverter.toJson(duration); // 0.0
+  final String? $serializedDuration =
+      optionalDurationConverter.toJson(duration); // 00:00:00.000000
   final Duration? $deserializedDuration =
       optionalDurationConverter.fromJson($serializedDuration);
   print(duration == $deserializedDuration); // true

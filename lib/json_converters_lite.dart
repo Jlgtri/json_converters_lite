@@ -218,22 +218,22 @@ class DateTimeConverter implements JsonConverter<DateTime, String> {
 
 /// The converter for nullable [Duration].
 ///
-/// Gets total seconds within the [Duration] with microsecond precision.
+/// Convert the [Duration] with microsecond precision.
 const OptionalDurationConverter optionalDurationConverter =
     OptionalDurationConverter._();
 
 /// The converter for nullable [Duration].
 ///
-/// Gets total seconds within the [Duration] with microsecond precision.
+/// Convert the [Duration] with microsecond precision.
 @immutable
-class OptionalDurationConverter implements JsonConverter<Duration?, num?> {
+class OptionalDurationConverter implements JsonConverter<Duration?, String?> {
   /// The converter for nullable [Duration].
   ///
-  /// Gets total seconds within the [Duration] with microsecond precision.
+  /// Convert the [Duration] with microsecond precision.
   const OptionalDurationConverter._();
 
   @override
-  num? toJson(final Duration? value) {
+  String? toJson(final Duration? value) {
     if (value == null) {
       return null;
     }
@@ -245,7 +245,7 @@ class OptionalDurationConverter implements JsonConverter<Duration?, num?> {
   }
 
   @override
-  Duration? fromJson(final num? value) {
+  Duration? fromJson(final String? value) {
     if (value == null) {
       return null;
     }
@@ -259,52 +259,74 @@ class OptionalDurationConverter implements JsonConverter<Duration?, num?> {
 
 /// The converter for [Duration].
 ///
-/// Gets total seconds within the [Duration] with microsecond precision.
+/// Convert the [Duration] with microsecond precision.
 const DurationConverter durationConverter = DurationConverter._();
 
 /// The converter for [Duration].
 ///
-/// Gets total seconds within the [Duration] with microsecond precision.
+/// Convert the [Duration] with microsecond precision.
 @immutable
-class DurationConverter implements JsonConverter<Duration, num> {
+class DurationConverter implements JsonConverter<Duration, String> {
   /// The converter for [Duration].
   ///
-  /// Gets total seconds within the [Duration] with microsecond precision.
+  /// Convert the [Duration] with microsecond precision.
   const DurationConverter._();
 
   @override
-  num toJson(final Duration value) {
-    final String microseconds = value.inMicroseconds.toString();
-    final String seconds = microseconds.length > 6
-        ? microseconds.substring(0, microseconds.length - 6)
-        : '0';
-    final String micros = microseconds.substring(
-      microseconds.length > 6 ? microseconds.length - 6 : 0,
-    );
-    return double.parse('$seconds.${micros.padLeft(6, '0')}');
-  }
+  String toJson(final Duration value) => <String>[
+        <int>[
+          value.inHours,
+          value.inMinutes % 60,
+          value.inSeconds % 60,
+        ].map((final _) => _.toString().padLeft(2, '0')).join(':'),
+        (value.inMicroseconds % 1000000).toString().padLeft(6, '0'),
+      ].join('.');
 
   @override
-  Duration fromJson(final num value) {
-    final int seconds;
-    final int milliseconds;
-    final int microseconds;
-    if (value is int) {
-      seconds = value;
-      milliseconds = microseconds = 0;
-    } else if (value is double) {
-      final Iterable<String> parts = value.toStringAsFixed(6).split('.');
-      seconds = int.parse(parts.first);
-      milliseconds = int.parse(parts.last.substring(0, 3));
-      microseconds = int.parse(parts.last.substring(3));
-    } else {
+  Duration fromJson(final String value) {
+    final Iterable<String> parts = value.split(':');
+    if (parts.isEmpty ||
+        parts.length > 4 ||
+        parts.any((final _) => _.contains(RegExp('[^0-9.]')))) {
       throw FormatException(
-        'A value of type "${value.runtimeType}" can not be handled. '
-        'Supported types are int and double.',
+        'A value `$value` can not be handled. '
+        'Should be in format `dd:hh:mm:ss.us`.',
       );
     }
+
+    double days = 0;
+    double hours = 0;
+    double minutes = 0;
+    double seconds = double.parse(parts.last);
+    if (parts.length > 3) {
+      final String daysPart = parts.elementAt(parts.length - 4);
+      if (daysPart.isNotEmpty) {
+        days += double.parse(daysPart);
+        hours += 24 * days.remainder(1);
+      }
+    }
+    if (parts.length > 2) {
+      final String hoursPart = parts.elementAt(parts.length - 3);
+      if (hoursPart.isNotEmpty) {
+        hours += double.parse(hoursPart);
+        minutes += 60 * hours.remainder(1);
+      }
+    }
+    if (parts.length > 1) {
+      final String minutesPart = parts.elementAt(parts.length - 2);
+      if (minutesPart.isNotEmpty) {
+        minutes += double.parse(minutesPart);
+        seconds += 60 * minutes.remainder(1);
+      }
+    }
+    final String fraction = seconds.remainder(1).toStringAsFixed(6);
+    final int milliseconds = int.parse(fraction.substring(2, 5));
+    final int microseconds = int.parse(fraction.substring(5, 8));
     return Duration(
-      seconds: seconds,
+      days: days.floor(),
+      hours: hours.floor(),
+      minutes: minutes.floor(),
+      seconds: seconds.floor(),
       milliseconds: milliseconds,
       microseconds: microseconds,
     );

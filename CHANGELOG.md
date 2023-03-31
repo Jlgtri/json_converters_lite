@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.0.3]
+
+### Changed
+
+- Changed `DurationConverter` to accept strings in format `dd:hh:mm:ss.us`.
+
 ## [1.0.2+1]
 
 ### Added
@@ -55,7 +61,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   5. **IterableConverter**, which takes the other `converter` as an argument and
      serializes each value in the `Iterable` with that converter.
 
-[unreleased]: https://github.com/Jlgtri/json_converters_lite/compare/v1.0.2+1...HEAD
+[unreleased]: https://github.com/Jlgtri/json_converters_lite/compare/v1.0.3...HEAD
+[1.0.3]: https://github.com/Jlgtri/json_converters_lite/compare/v1.0.2+1...v1.0.3
 [1.0.2+1]: https://github.com/Jlgtri/json_converters_lite/compare/v1.0.2...v1.0.2+1
 [1.0.2]: https://github.com/Jlgtri/json_converters_lite/compare/v1.0.1...v1.0.2
 [1.0.1]: https://github.com/Jlgtri/json_converters_lite/compare/v1.0.0+2...v1.0.1
